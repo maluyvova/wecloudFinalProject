@@ -1,0 +1,34 @@
+name: Apply
+
+on:
+  workflow_dispatch:
+    branches:
+      - main
+
+jobs:
+  apply:
+    runs-on: ubuntu-latest
+    name: Apply terraform
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: terraform apply
+        uses: dflook/terraform-apply@v1
+        env:
+          TF_VAR_avail_zone: ${{ secrets.TF_VAR_AVAIL_ZONE }}
+          TF_VAR_aws_access_key: ${{ secrets.TF_VAR_AWS_ACCESS_KEY }}
+          TF_VAR_cidr_blocks: ${{ secrets.TF_VAR_CIDR_BLOCKS }}
+          TF_VAR_env_prefix: ${{ secrets.TF_VAR_ENV_PREFIX }}
+          TF_VAR_instaance_type: ${{ secrets.TF_VAR_INSTANCE_TYPE }}
+          TF_VAR_my_ip: ${{ secrets.TF_VAR_MY_IP }}
+          TF_VAR_private_subnet_cidr_blocks: ${{ secrets.TF_VAR_PRIVATE_SUBNET_CIDR_BLOCKS }}
+          TF_VAR_public_key: ${{ secrets.TF_VAR_PUBLIC_KEY }}
+          TF_VAR_public_subnet_cidr_blocks: ${{ secrets.TF_VAR_PUBLIC_SUBNET_CIDR_BLOCKS }}
+          TF_VAR_secret_key: ${{ secrets.TF_VAR_SECRET_KEY }}
+          TF_VAR_subnet_cidr_block: ${{ secrets.TF_VAR_SUBNET_CIDR_BLOCK }}
+          TF_VAR_vpc_cidr_block: ${{ secrets.TF_VAR_VPC_CIDR_BLOCK }}
+
+
+
+          
