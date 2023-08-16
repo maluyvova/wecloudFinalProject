@@ -59,6 +59,8 @@ jobs:
     # needs: [apply]
     name: Run Ansible playbook
     steps:
+      - name: Checkout
+        uses: actions/checkout@v3
       - name: check files
         run: "ls -la"
       - name: ansible playbook
