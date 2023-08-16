@@ -46,6 +46,7 @@ jobs:
         uses: dflook/terraform-apply@v1
         with:
           path: terraform
+          auto_approve: true
         env:
           TF_VAR_avail_zone: ${{ secrets.TF_VAR_AVAIL_ZONE }}
           TF_VAR_aws_access_key: ${{ secrets.TF_VAR_AWS_ACCESS_KEY }}
