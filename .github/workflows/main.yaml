@@ -6,61 +6,63 @@ on:
       - main
 
 jobs:
-  plan:
-    runs-on: ubuntu-latest
-    name: Plan terraform
-    env:
-      TF_VAR_avail_zone: ${{ secrets.TF_VAR_AVAIL_ZONE }}
-      TF_VAR_aws_access_key: ${{ secrets.TF_VAR_AWS_ACCESS_KEY }}
-      TF_VAR_aws_secret_key: ${{ secrets.TF_VAR_AWS_SECRET_KEY }}
-      TF_VAR_cidr_blocks: ${{ secrets.TF_VAR_CIDR_BLOCKS }}
-      TF_VAR_env_prefix: ${{ secrets.TF_VAR_ENV_PREFIX }}
-      TF_VAR_instance_type: ${{ secrets.TF_VAR_INSTANCE_TYPE }}
-      TF_VAR_my_ip: ${{ secrets.TF_VAR_MY_IP }}
-      TF_VAR_private_subnet_cidr_blocks: ${{ secrets.TF_VAR_PRIVATE_SUBNET_CIDR_BLOCKS }}
-      TF_VAR_public_key: ${{ secrets.TF_VAR_PUBLIC_KEY }}
-      TF_VAR_public_subnet_cidr_blocks: ${{ secrets.TF_VAR_PUBLIC_SUBNET_CIDR_BLOCKS }}
-      TF_VAR_subnet_cidr_block: ${{ secrets.TF_VAR_SUBNET_CIDR_BLOCK }}
-      TF_VAR_vpc_cidr_block: ${{ secrets.TF_VAR_VPC_CIDR_BLOCK }}
-      TF_VAR_image_name: ${{ secrets.TF_VAR_IMAGE_NAME }}
+  # plan:
+  #   runs-on: ubuntu-latest
+  #   name: Plan terraform
+  #   env:
+  #     TF_VAR_avail_zone: ${{ secrets.TF_VAR_AVAIL_ZONE }}
+  #     TF_VAR_aws_access_key: ${{ secrets.TF_VAR_AWS_ACCESS_KEY }}
+  #     TF_VAR_aws_secret_key: ${{ secrets.TF_VAR_AWS_SECRET_KEY }}
+  #     TF_VAR_cidr_blocks: ${{ secrets.TF_VAR_CIDR_BLOCKS }}
+  #     TF_VAR_env_prefix: ${{ secrets.TF_VAR_ENV_PREFIX }}
+  #     TF_VAR_instance_type: ${{ secrets.TF_VAR_INSTANCE_TYPE }}
+  #     TF_VAR_my_ip: ${{ secrets.TF_VAR_MY_IP }}
+  #     TF_VAR_private_subnet_cidr_blocks: ${{ secrets.TF_VAR_PRIVATE_SUBNET_CIDR_BLOCKS }}
+  #     TF_VAR_public_key: ${{ secrets.TF_VAR_PUBLIC_KEY }}
+  #     TF_VAR_public_subnet_cidr_blocks: ${{ secrets.TF_VAR_PUBLIC_SUBNET_CIDR_BLOCKS }}
+  #     TF_VAR_subnet_cidr_block: ${{ secrets.TF_VAR_SUBNET_CIDR_BLOCK }}
+  #     TF_VAR_vpc_cidr_block: ${{ secrets.TF_VAR_VPC_CIDR_BLOCK }}
+  #     TF_VAR_image_name: ${{ secrets.TF_VAR_IMAGE_NAME }}
 
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-      - name: terraform plan
-        uses: dflook/terraform-plan@v1
-        with:
-          path: terraform
+  #   steps:
+  #     - name: Checkout
+  #       uses: actions/checkout@v3
+  #     - name: terraform plan
+  #       uses: dflook/terraform-plan@v1
+  #       with:
+  #         path: terraform
         
-  apply:
-    runs-on: ubuntu-latest
-    name: Apply terraform
-    steps:
-      - name: terraform apply
-        uses: dflook/terraform-apply@v1
-        env:
-          TF_VAR_avail_zone: ${{ secrets.TF_VAR_AVAIL_ZONE }}
-          TF_VAR_aws_access_key: ${{ secrets.TF_VAR_AWS_ACCESS_KEY }}
-          TF_VAR_aws_secret_key: ${{ secrets.TF_VAR_AWS_SECRET_KEY }}
-          TF_VAR_cidr_blocks: ${{ secrets.TF_VAR_CIDR_BLOCKS }}
-          TF_VAR_env_prefix: ${{ secrets.TF_VAR_ENV_PREFIX }}
-          TF_VAR_instance_type: ${{ secrets.TF_VAR_INSTANCE_TYPE }}
-          TF_VAR_my_ip: ${{ secrets.TF_VAR_MY_IP }}
-          TF_VAR_private_subnet_cidr_blocks: ${{ secrets.TF_VAR_PRIVATE_SUBNET_CIDR_BLOCKS }}
-          TF_VAR_public_key: ${{ secrets.TF_VAR_PUBLIC_KEY }}
-          TF_VAR_public_subnet_cidr_blocks: ${{ secrets.TF_VAR_PUBLIC_SUBNET_CIDR_BLOCKS }}
-          TF_VAR_subnet_cidr_block: ${{ secrets.TF_VAR_SUBNET_CIDR_BLOCK }}
-          TF_VAR_vpc_cidr_block: ${{ secrets.TF_VAR_VPC_CIDR_BLOCK }}
-          TF_VAR_image_name: ${{ secrets.TF_VAR_IMAGE_NAME }}
+  # apply:
+  #   runs-on: ubuntu-latest
+  #   needs: [plan]
+  #   name: Apply terraform
+  #   steps:
+  #     - name: terraform apply
+  #       uses: dflook/terraform-apply@v1
+  #       env:
+  #         TF_VAR_avail_zone: ${{ secrets.TF_VAR_AVAIL_ZONE }}
+  #         TF_VAR_aws_access_key: ${{ secrets.TF_VAR_AWS_ACCESS_KEY }}
+  #         TF_VAR_aws_secret_key: ${{ secrets.TF_VAR_AWS_SECRET_KEY }}
+  #         TF_VAR_cidr_blocks: ${{ secrets.TF_VAR_CIDR_BLOCKS }}
+  #         TF_VAR_env_prefix: ${{ secrets.TF_VAR_ENV_PREFIX }}
+  #         TF_VAR_instance_type: ${{ secrets.TF_VAR_INSTANCE_TYPE }}
+  #         TF_VAR_my_ip: ${{ secrets.TF_VAR_MY_IP }}
+  #         TF_VAR_private_subnet_cidr_blocks: ${{ secrets.TF_VAR_PRIVATE_SUBNET_CIDR_BLOCKS }}
+  #         TF_VAR_public_key: ${{ secrets.TF_VAR_PUBLIC_KEY }}
+  #         TF_VAR_public_subnet_cidr_blocks: ${{ secrets.TF_VAR_PUBLIC_SUBNET_CIDR_BLOCKS }}
+  #         TF_VAR_subnet_cidr_block: ${{ secrets.TF_VAR_SUBNET_CIDR_BLOCK }}
+  #         TF_VAR_vpc_cidr_block: ${{ secrets.TF_VAR_VPC_CIDR_BLOCK }}
+  #         TF_VAR_image_name: ${{ secrets.TF_VAR_IMAGE_NAME }}
   
   run_playbook:
     runs-on: ubuntu-latest
+    needs: [apply]
     name: Run Ansible playbook
     steps:
       - name: ansible playbook
         uses: dawidd6/action-ansible-playbook@v2
         with:
-          playbook: ansible/main.yml
+          playbook: ansible
           key: ${{secrets.SSH_PRIVATE_KEY}}  
 
   # - name: Run playbook
