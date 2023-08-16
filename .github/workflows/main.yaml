@@ -39,6 +39,9 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3 
+      - uses: webfactory/ssh-agent@v0.7.0
+        with:
+            ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}    
       - name: terraform apply
         uses: dflook/terraform-apply@v1
         with:
@@ -56,10 +59,7 @@ jobs:
           TF_VAR_public_subnet_cidr_blocks: ${{ secrets.TF_VAR_PUBLIC_SUBNET_CIDR_BLOCKS }}
           TF_VAR_subnet_cidr_block: ${{ secrets.TF_VAR_SUBNET_CIDR_BLOCK }}
           TF_VAR_vpc_cidr_block: ${{ secrets.TF_VAR_VPC_CIDR_BLOCK }}
-          TF_VAR_image_name: ${{ secrets.TF_VAR_IMAGE_NAME }}
-      - uses: webfactory/ssh-agent@v0.7.0
-        with:
-            ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}  
+          TF_VAR_image_name: ${{ secrets.TF_VAR_IMAGE_NAME }} 
       - name: check files
         run: "cat ansible/inventory/hosts.yaml"
       - name: ansible playbook
