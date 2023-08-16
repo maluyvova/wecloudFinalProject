@@ -1,0 +1,5 @@
+all: 
+  hosts:               
+    mongodb: 
+      ansible_ssh_user: ubuntu
+      ansible_host: "3.101.43.20"
