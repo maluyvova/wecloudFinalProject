@@ -62,6 +62,7 @@ jobs:
       - name: ansible playbook
         uses: dawidd6/action-ansible-playbook@v2
         with:
+          echo "[LS]: $(ls -al)"
           playbook: main.yaml
           directory: /ansible
           key: ${{secrets.SSH_PRIVATE_KEY}}  
