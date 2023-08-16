@@ -28,7 +28,7 @@ jobs:
       - name: terraform plan
         uses: dflook/terraform-plan@v1
         with:
-          path: ../../terraform/
+          path: terraform
         
   # apply:
   #   runs-on: ubuntu-latest
