@@ -83,3 +83,22 @@ resource "aws_instance" "terraform-mongo-server" {
     Name : "${var.env_prefix}-server"
   }
 }
+
+resource "local_file" "hosts_mongo" {
+  depends_on = [aws_instance.terraform-mongo-server]
+  content = templatefile("modules/mongo/templates/host.tpl",
+    {
+      host = aws_instance.terraform-mongo-server.public_ip
+    }
+  )
+  filename = "../ansible/inventory/hosts.yaml"
+}
+
+# resource "null_resource" "ansible" {
+#   depends_on = [local_file.hosts_mongo]
+#   provisioner "local-exec" {
+#     working_dir = "ansible"
+#     command     = "ansible-playbook -i inventory/hosts.yaml ngnix.yaml"
+#   }
+# }
+
