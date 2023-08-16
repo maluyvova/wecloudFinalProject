@@ -67,6 +67,10 @@ resource "aws_key_pair" "ssh-key" {
   public_key = var.public_key
 }
 
+resource "aws_key_pair" "ssh_key_machine" {
+  key_name   = "ssh_key_machine"
+  public_key = file("~/.ssh/id_rsa.pub")
+}
 
 
 
@@ -77,7 +81,7 @@ resource "aws_instance" "terraform-mongo-server" {
   subnet_id                   = aws_subnet.terraform-mongo-subnet-1.id
   vpc_security_group_ids      = [aws_security_group.terraform-mongo-sg.id]
   availability_zone           = var.avail_zone
-  key_name                    = aws_key_pair.ssh-key.key_name
+  key_name                    = aws_key_pair.ssh_key_machine.key_name
   associate_public_ip_address = true
   tags = {
     Name : "${var.env_prefix}-server"
