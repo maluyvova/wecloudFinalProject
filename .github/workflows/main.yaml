@@ -69,6 +69,8 @@ jobs:
           playbook: main.yaml
           directory: ansible
           key: ${{secrets.SSH_PRIVATE_KEY}}  
+          options: |
+            --inventory ansible/inventory/hosts.yaml  
 
   # - name: Run playbook
   # uses: dawidd6/action-ansible-playbook@v2
