@@ -60,7 +60,7 @@ jobs:
     name: Run Ansible playbook
     steps:
       - name: check files
-        run: echo "ls -la"
+        run: "ls -la"
       - name: ansible playbook
         uses: dawidd6/action-ansible-playbook@v2
         with:
