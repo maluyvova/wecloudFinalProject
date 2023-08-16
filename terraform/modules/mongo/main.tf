@@ -67,10 +67,10 @@ resource "aws_key_pair" "ssh-key" {
   public_key = var.public_key
 }
 
-resource "aws_key_pair" "ssh_key_machine" {
-  key_name   = "ssh_key_machine"
-  public_key = file("~/.ssh/id_rsa.pub")
-}
+# resource "aws_key_pair" "ssh_key_machine" {
+#   key_name   = "ssh_key_machine"
+#   public_key = file("~/.ssh/id_rsa.pub")
+# }
 
 
 
