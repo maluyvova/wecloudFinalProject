@@ -37,5 +37,5 @@ module "terraform-mongo" {
   cidr_blocks       = var.cidr_blocks
   subnet_cidr_block = var.subnet_cidr_block
   avail_zone        = var.avail_zone
-  public_key_location = var.public_key_location
+  public_key = var.public_key
 }
