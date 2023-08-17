@@ -1,0 +1,40 @@
+---
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: collection
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      run: collection
+  template:
+    metadata:
+      labels:
+        run: collection
+    spec:
+      containers:
+        - env:
+            - name: MONGO_DATABASE_URL
+              value: mongodb+srv://wecloudvlad:gzUO2KDK9eNsjT4h@cluster0.ohh8fqv.mongodb.net/
+          image: maluyvova/collection
+          name: collection
+          ports:
+            - containerPort: 3000
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: collection
+  name: collection
+spec:
+  ports:
+    - name: http
+      port: 80
+      protocol: TCP
+      targetPort: 3000
+  selector:
+    run: collection
+  type: LoadBalancer
