@@ -82,7 +82,20 @@ jobs:
     - name: Authenticate with EKS cluster
       run: aws eks --region us-west-1 update-kubeconfig --name EKS
     - name: Apply Kubernetes deployment
-      run: kubectl apply -f kubernetes/app.yaml  
+      run: kubectl apply -f kubernetes/app.yaml 
+    - name: Apply Kubernetes cluster role
+      run: kubectl apply -f kubernetes/clusterRole.yaml 
+    - name: Apply Kubernetes role binding
+      run: kubectl apply -f kubernetes/rolebinding.yaml 
+    - name: Apply Kubernetes Service Role
+      run: kubectl apply -f kubernetes/serviceAccount.yaml 
+    - name: Apply Kubernetes Config Map
+      run: kubectl apply -f kubernetes/config-map.yaml
+    - name: Kubernetes create namespace
+      run: kubectl create ns monitoring   
+    - name: Add helm Repo for prometheus
+      run: helm repo add prometheus-community https://prometheus-community.github.io/helm-charts      
+           
     
 
 

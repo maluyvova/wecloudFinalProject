@@ -1,0 +1,100 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: fluentd-config
+  namespace: kube-system
+data:
+  fluent.conf: |
+    <source>
+      @type tail
+      path /var/log/containers/react*.log
+      pos_file fluentd-docker.pos
+      tag nginx.access
+      <parse>
+        @type regexp
+        expression /^(?<time>.+) (?<stream>stdout|stderr)( (?<logtag>.))? (?<log>.*)$/
+      </parse>
+    </source>
+
+    <filter nginx.access>
+      @type parser
+      key_name log
+      <parse>
+        @type nginx
+        expression /^(?<remote>[^ ]*) (?<host>[^ ]*) (?<user>[^ ]*) \[(?<time>[^\]]*)\] "(?<method>\S+)(?: +(?<path>[^\"]*?)(?: +\S*)?)?" (?<code>[^ ]*) (?<size>[^ ]*)(?: "(?<referer>[^\"]*)" "(?<agent>[^\"]*)"(?:\s+(?<http_x_forwarded_for>[^ ]+))?)?$/
+        types remote:string,host:string,user:string,time:string,method:string,path:string,code:integer,size:float,referer:string,agent:string,http_x_forwarded_for:string
+        time_format %d/%b/%Y:%H:%M:%S %z
+        time_key time
+      </parse>
+    </filter>
+
+
+
+    <filter nginx.access>
+      @type prometheus
+
+      # You can use counter type with specifying a key,
+      # and increments counter by the value
+      <metric>
+        name nginx_size_counter_bytes
+        type counter
+        desc nginx bytes sent
+        key size
+        <labels>
+          host ${host}
+        </labels>
+      </metric>
+
+      <metric>
+        name nginx_request_status_code_total
+        type counter
+        desc nginx request status code
+        <labels>
+          method ${method}
+          path ${path}
+          status_code ${code}
+        </labels>
+      </metric>
+    </filter>
+
+    <match nginx.access>
+      @type copy
+      <store>
+        @type stdout
+      </store>
+    </match>
+
+    <source>
+      @type forward
+    </source>
+
+    # input plugin that collects metrics from MonitorAgent
+    <source>
+      @type prometheus_monitor
+      <labels>
+        host ${hostname}
+      </labels>
+    </source>
+
+    # input plugin that collects metrics for in_tail plugin
+    <source>
+      @type prometheus_tail_monitor
+      <labels>
+        host ${hostname}
+      </labels>
+    </source>
+
+    <source>
+      @type prometheus
+      bind 0.0.0.0
+      port 24231
+      metrics_path /metrics
+    </source>
+
+    <source>
+      @type prometheus_output_monitor
+      interval 10
+      <labels>
+        hostname ${hostname}
+      </labels>
+    </source>
