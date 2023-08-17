@@ -98,8 +98,8 @@ jobs:
     - name: Install helm Repo
       run: helm install monitoring prometheus-community/kube-prometheus-stack --namespace=monitoring
     - name: Upgrade Helm 
-      run: helm upgrade monitoring prometheus-community/kube-prometheus-stack --namespace=monitoring --values values.yaml
-               
+      run: helm upgrade monitoring prometheus-community/kube-prometheus-stack --namespace=monitoring --values kubernetes/values.yaml
+
            
     
 
