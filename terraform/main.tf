@@ -15,18 +15,18 @@ provider "aws" {
 
 
 
-# module "terraform-vpc-module" {
-#   source                     = "./modules/vpc"
-#   vpc_cidr_block             = var.vpc_cidr_block
-#   private_subnet_cidr_blocks = var.private_subnet_cidr_blocks
-#   public_subnet_cidr_blocks  = var.public_subnet_cidr_blocks
-# }
+module "terraform-vpc-module" {
+  source                     = "./modules/vpc"
+  vpc_cidr_block             = var.vpc_cidr_block
+  private_subnet_cidr_blocks = var.private_subnet_cidr_blocks
+  public_subnet_cidr_blocks  = var.public_subnet_cidr_blocks
+}
 
-# module "terraform-eks-module" {
-#   source     = "./modules/eks"
-#   vpc_id     = module.terraform-vpc-module.vpc.vpc_id
-#   subnet_ids = module.terraform-vpc-module.vpc.private_subnets
-# }
+module "terraform-eks-module" {
+  source     = "./modules/eks"
+  vpc_id     = module.terraform-vpc-module.vpc.vpc_id
+  subnet_ids = module.terraform-vpc-module.vpc.private_subnets
+}
 
 module "terraform-mongo" {
   source            = "./modules/mongo"
