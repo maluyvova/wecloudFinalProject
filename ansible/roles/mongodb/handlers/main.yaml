@@ -1,3 +1,4 @@
 ---
 - name: Start mongod
   service: name=mongod state=started
+  become: yes   
