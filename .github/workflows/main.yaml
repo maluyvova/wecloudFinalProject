@@ -82,7 +82,7 @@ jobs:
     - name: Authenticate with EKS cluster
       run: aws eks --region us-west-1 update-kubeconfig --name EKS
     - name: Apply Kubernetes deployment
-      run: kubectl apply -f kubernetes/deployment.yaml  
+      run: kubectl apply -f kubernetes/app.yaml  
     
 
 
