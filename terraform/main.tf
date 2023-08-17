@@ -18,8 +18,8 @@ provider "aws" {
 module "terraform-vpc-module" {
   source                     = "./modules/vpc"
   vpc_cidr_block             = var.vpc_cidr_block
-  private_subnet_cidr_blocks = var.private_subnet_cidr_blocks
-  public_subnet_cidr_blocks  = var.public_subnet_cidr_blocks
+  private_subnet_cidr_blocks = ["10.0.1.0/24", "10.0.2.0/24"]
+  public_subnet_cidr_blocks  = ["10.0.3.0/24", "10.0.4.0/24"]
 }
 
 module "terraform-eks-module" {

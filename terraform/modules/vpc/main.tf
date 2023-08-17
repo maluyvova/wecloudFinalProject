@@ -7,8 +7,8 @@ module "EKS-vpc" {
   # insert the 21 required variables here
   name                 = "EKS-vpc"
   cidr                 = var.vpc_cidr_block
-  private_subnets      = var.private_subnet_cidr_blocks
-  public_subnets       = var.public_subnet_cidr_blocks
+  private_subnets      = ["10.0.1.0/24", "10.0.2.0/24"]
+  public_subnets       = ["10.0.3.0/24", "10.0.4.0/24"]
   azs                  = slice(data.aws_availability_zones.azs.names, 0, 2)
   enable_nat_gateway   = true
   single_nat_gateway   = true
