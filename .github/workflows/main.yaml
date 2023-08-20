@@ -92,7 +92,7 @@ jobs:
       - name: show mongo ip
         run: |
           export MONGO_IP=${{ needs.apply_and_provision.outputs.MONGO_IP }}
-          sed -i.bak  "s|value: MONGO_DB_URL|value: mongodb://${MONGO_IP}:27017/?directConnection=true&serverSelectionTimeoutMS=2000|g" kubernetes/app.yaml
+          sed -i.bak  "s|value: MONGO_DB_URL|value: mongodb://${MONGO_IP}:27017/?directConnection=true|g" kubernetes/app.yaml
           cat kubernetes/app.yaml
       - name: show ip
         run: |
