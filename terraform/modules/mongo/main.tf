@@ -50,6 +50,12 @@ resource "aws_security_group" "terraform-mongo-sg" {
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
+  ingress {
+    from_port   = 27017
+    to_port     = 27017
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
   egress {
     from_port       = 0
     to_port         = 0
@@ -96,6 +102,16 @@ resource "local_file" "hosts_mongo" {
     }
   )
   filename = "../ansible/inventory/hosts.yaml"
+}
+
+resource "local_file" "set_ip_of_mongo" {
+  depends_on = [aws_instance.terraform-mongo-server]
+  content = templatefile("modules/mongo/templates/ip.tpl",
+    {
+      ip = aws_instance.terraform-mongo-server.public_ip
+    }
+  )
+  filename = "../kubernetes/ip.yaml"
 }
 
 # resource "null_resource" "ansible" {
