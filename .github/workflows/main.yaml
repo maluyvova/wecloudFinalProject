@@ -95,7 +95,7 @@ jobs:
           sed -i.bak  "s|value: MONGO_DB_URL|value: mongodb://${MONGO_IP}:27017/?directConnection=true|g" kubernetes/app.yaml
           cat kubernetes/app.yaml
       - name: Authenticate with EKS cluster
-        run: aws eks --region us-west-1 update-kubeconfig --name EKS
+        run: aws eks --region us-west-1 update-kubeconfig --name EKSClusterNew
       - name: Apply Kubernetes deployment
         run: kubectl apply -f kubernetes/app.yaml 
       - name: Apply Kubernetes cluster role
