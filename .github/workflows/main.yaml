@@ -88,7 +88,7 @@ jobs:
           export MONGO_IP=${{ needs.apply_and_provision.steps.mongo_ip.outputs.MONGO_IP }}
       - name: show ip
         run: |
-          echo MONGO_IP
+          echo ${MONGO_IP}
 #      - name: Authenticate with EKS cluster
 #        run: aws eks --region us-west-1 update-kubeconfig --name EKS
 #      - name: Apply Kubernetes deployment
