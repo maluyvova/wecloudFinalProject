@@ -91,9 +91,8 @@ jobs:
           aws-region: us-west-1
       - name: show mongo ip
         run: |
-          chmod +rw kubernetes/app.yaml
-          ls -la kubernetes/
-          sed -i.bak  "s|value: MONGO_DB_URL|Hello|g" kubernetes/app.yaml
+          export MONGO_IP=${{ needs.apply_and_provision.outputs.MONGO_IP }}
+          sed -i.bak  "s|value: MONGO_DB_URL|${MONGO_IP}|g" kubernetes/app.yaml
           cat kubernetes/app.yaml
       - name: show ip
         run: |
