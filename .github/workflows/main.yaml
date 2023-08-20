@@ -92,6 +92,8 @@ jobs:
       - name: show mongo ip
         run: |
           export MONGO_IP=${{ needs.apply_and_provision.outputs.MONGO_IP }}
+          sed -i '' "s|value: MONGO_DB_URL|$MONGO_IP|g" kubernetes/app.yaml
+          cat kubernetes/app.yaml
       - name: show ip
         run: |
           echo ${MONGO_IP}

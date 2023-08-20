@@ -17,7 +17,7 @@ spec:
       containers:
         - env:
             - name: MONGO_DATABASE_URL
-              value: mongodb+srv://wecloudvlad:gzUO2KDK9eNsjT4h@cluster0.ohh8fqv.mongodb.net/
+              value: MONGO_DB_URL
           image: maluyvova/collection
           name: collection
           ports:
