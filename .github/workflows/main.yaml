@@ -92,6 +92,7 @@ jobs:
       - name: show mongo ip
         run: |
           chmod +rw kubernetes/app.yaml
+          ls -la kubernetes/
           sed -i '' "s|value: MONGO_DB_URL|Hello|g" kubernetes/app.yaml
           cat kubernetes/app.yaml
       - name: show ip
