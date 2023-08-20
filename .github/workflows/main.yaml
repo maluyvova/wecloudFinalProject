@@ -49,7 +49,9 @@ jobs:
          run: cat kubernetes/ip.yaml
       -  name: get mongo ip
          id: mongo_ip
-         run: export MONGO_IP=$(head -n 1 kubernetes/ip.yaml)
+         run: |
+           export MONGO_IP=$(head -n 1 kubernetes/ip.yaml)
+           echo "${MONGO_IP}"
          # >> $GITHUB_OUTPUT     
       -  name: sd mongo ip
          run: echo "${MONGO_IP}"
