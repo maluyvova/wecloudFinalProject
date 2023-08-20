@@ -9,6 +9,8 @@ jobs:
 
   apply_and_provision:
     runs-on: ubuntu-latest
+    outputs:
+      mongo_ip: ${{ steps.mongo_ip.outputs.MONGO_IP }}
     name: Apply terraform and provisioning with Ansible
     steps:
       - name: Checkout
@@ -50,11 +52,8 @@ jobs:
       -  name: get mongo ip
          id: mongo_ip
          run: |
-           export MONGO_IP=$(head -n 1 kubernetes/ip.yaml)
-           echo "${MONGO_IP}"
-         # >> $GITHUB_OUTPUT     
-      -  name: sd mongo ip
-         run: echo "${MONGO_IP}"
+           export MONGO=$(head -n 1 kubernetes/ip.yaml)
+           echo "MONGO_IP=${MONGO}" >> $GITHUB_OUTPUT
 
 #  build_iamge_and_push:
 #    runs-on: ubuntu-latest
@@ -92,7 +91,7 @@ jobs:
           aws-region: us-west-1
       - name: show mongo ip
         run: |
-          export MONGO_IP=${{ needs.apply_and_provision.steps.mongo_ip.outputs.MONGO_IP }}
+          export MONGO_IP=${{ needs.apply_and_provision.outputs.MONGO_IP }}
       - name: show ip
         run: |
           echo ${MONGO_IP}
