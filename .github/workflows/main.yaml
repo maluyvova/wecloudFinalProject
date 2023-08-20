@@ -91,7 +91,6 @@ jobs:
           aws-region: us-west-1
       - name: show mongo ip
         run: |
-          cat kubernetes/app.yaml
           chmod +rw kubernetes/app.yaml
           sed -i '' "s|value: MONGO_DB_URL|Hello|g" kubernetes/app.yaml
           cat kubernetes/app.yaml
