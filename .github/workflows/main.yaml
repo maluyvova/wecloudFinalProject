@@ -49,9 +49,10 @@ jobs:
          run: cat kubernetes/ip.yaml
       -  name: get mongo ip
          id: mongo_ip
-         run: echo "MONGO_IP=$(head -n 1 kubernetes/ip.yaml)" >> $GITHUB_OUTPUT     
+         run: export MONGO_IP=$(head -n 1 kubernetes/ip.yaml)
+         # >> $GITHUB_OUTPUT     
       -  name: sd mongo ip
-         run: echo "Hello"
+         run: echo "${MONGO_IP}"
 
 #  build_iamge_and_push:
 #    runs-on: ubuntu-latest
