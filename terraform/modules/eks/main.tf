@@ -2,7 +2,7 @@ module "eks" {
   source          = "terraform-aws-modules/eks/aws"
   version         = "~> 19.0"
   cluster_version = "1.27"
-  cluster_name    = "EKSClusterNew"
+  cluster_name    = "EKSClusterNew1"
   vpc_id          = var.vpc_id
   subnet_ids      = var.subnet_ids
   tags = {
